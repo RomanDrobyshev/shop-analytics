@@ -1,0 +1,24 @@
+FROM node:14.15.0-alpine as development
+
+WORKDIR /app
+
+COPY ./cron/package*.json ./
+
+RUN npm install
+
+COPY . .
+
+WORKDIR /app/cron
+
+RUN ../node_modules/.bin/tsc --project tsconfig.json
+
+FROM node:14.15.0-alpine as production
+
+WORKDIR /app
+ARG NODE_ENV
+COPY ./cron/package*.json ./cron/.${NODE_ENV}.env ./
+COPY ./cron/crontab /etc/crontabs/root
+
+RUN npm install --only=production
+
+COPY --from=development /app/cron/dist ./dist

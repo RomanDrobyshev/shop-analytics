@@ -1,0 +1,4 @@
+dist
+.git
+.history
+**/node_modules

@@ -1,0 +1,5 @@
+.idea
+example.jsonl
+dist
+**/node_modules
+**/.*.env

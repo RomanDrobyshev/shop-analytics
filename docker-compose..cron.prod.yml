@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  cron:
+    build:
+      context: .
+      dockerfile: Dockerfile-cron
+      args:
+        NODE_ENV: production
+    container_name: cron_prod
+    image: cron_prod
+    environment:
+      - NODE_ENV=production
+    env_file: ./cron/.production.env
+    command: >
+      sh -c "node ./dist/cron/src/startup.js &&
+             crond -f"

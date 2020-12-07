@@ -1,0 +1,42 @@
+{
+  "name": "cron",
+  "version": "1.0.0",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "startup": "cross-env NODE_ENV=development ts-node-dev src/startup",
+    "build": "tsc --project tsconfig.json",
+    "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
+    "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d",
+    "build:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml build",
+    "build:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml build",
+    "restart:prod": "npm run build:prod && npm run docker:prod",
+    "report:dev": "NODE_ENV=development ts-node-dev src/scheduledTasks/generateReport.ts",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "ts-node-dev src/test.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/Ekito/docker-cron#readme",
+  "dependencies": {
+    "dayjs": "^1.9.7",
+    "dotenv": "^8.2.0",
+    "mongodb": "^3.6.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.15",
+    "@types/mongodb": "^3.6.0",
+    "@types/node": "^14.14.6",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.2",
+    "ts-node-dev": "^1.0.0",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.0.5"
+  }
+}
